@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ControlAI - Plataforma SaaS Multi-tenant de Inteligência Artificial
 
-## Getting Started
+Este projeto é um MVP de uma plataforma SaaS desenvolvida para o desafio técnico de Engenharia de Software. O sistema permite que empresas gerenciem o uso de LLMs de forma segura, implementando uma arquitetura **Multi-tenant** com isolamento estrito de dados (Row Level Security).
 
-First, run the development server:
+🔗 **Deploy (Produção):** [https://control-ai-one.vercel.app](https://control-ai-one.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tecnologias & Arquitetura
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O projeto foi construído com foco em escalabilidade, segurança e performance:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS.
+- **UI System:** shadcn/ui (Componentes acessíveis e responsivos).
+- **Backend & Auth:** Supabase (PostgreSQL).
+- **Segurança:** RLS (Row Level Security) garantindo que dados de uma empresa ("Tenant") sejam invisíveis para outras.
+- **Deploy:** Vercel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛡️ Destaques da Implementação
 
-## Learn More
+1.  **Multi-tenancy Nativo:**
+    - Detecção automática de organização via banco de dados.
+    - Fluxo de Onboarding forçado: Redirecionamento automático para criação de workspace caso o usuário não possua um.
+    - Middleware de proteção de rotas para garantir integridade da sessão.
 
-To learn more about Next.js, take a look at the following resources:
+2.  **Segurança (RLS):**
+    - Políticas de banco de dados configuradas para isolamento total.
+    - Autenticação robusta integrada ao Supabase Auth.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **UX/UI Responsiva:**
+    - Layout adaptativo: Sidebar de navegação no Desktop e interface simplificada "Mobile-first" em celulares.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚧 Status das Funcionalidades
 
-## Deploy on Vercel
+Conforme o escopo do MVP focado em arquitetura:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [x] Autenticação (Login/Logout)
+- [x] Criação de Workspace (Empresas)
+- [x] Dashboard Multi-tenant
+- [x] Interface de Chat (UI/UX)
+- [ ] **Integração Stripe:** Estrutura de banco pronta, integração planejada para v2.
+- [ ] **API Real de IA:** O chat utiliza um Mock de baixa latência para fins de demonstração e proteção de chaves de API em ambiente público.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Como rodar localmente
+
+1. Clone o repositório:
+   \`\`\`bash
+   git clone https://github.com/JVictorVeloso/control-ai.git
+   \`\`\`
+
+2. Instale as dependências:
+   \`\`\`bash
+   npm install
+   \`\`\`
+
+3. Configure as variáveis de ambiente (`.env.local`) com suas credenciais do Supabase.
+
+4. Execute o servidor:
+   \`\`\`bash
+   npm run dev
+   \`\`\`
