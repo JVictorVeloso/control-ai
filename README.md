@@ -125,4 +125,4 @@ Mesmo sem experiência prévia como Full Stack, o foco foi demonstrar **potencia
 
 ---
 
-📌 Desenvolvido por **João Vitor**
+📌 Desenvolvido por **João Victor**
