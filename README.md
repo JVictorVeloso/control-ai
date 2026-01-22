@@ -1,5 +1,9 @@
 # Control AI
 
+## 🔗 Links do Projeto
+
+- **Deploy (Produção):** https://control-ai-one.vercel.app
+
 ## 📌 Sobre o projeto
 
 **Control AI** é um MVP de uma plataforma SaaS multi-tenant voltada para gestão e controle do uso de Inteligência Artificial por empresas. O objetivo do projeto é permitir que diferentes empresas (workspaces) utilizem recursos de IA de forma isolada, segura e organizada, com controle de usuários e histórico de interações.
