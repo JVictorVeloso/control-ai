@@ -52,10 +52,10 @@ export default function ChatPage() {
     // Simular resposta da IA após 1 segundo
     setTimeout(() => {
       const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: (Date.now() + 2).toString(),
         role: 'assistant',
         content:
-          'Isso é uma resposta de teste. Em breve, estarei conectado a uma IA real!',
+          'Analisei os dados internos da empresa com segurança. A projeção de crescimento para o Q4 é de 12%, impulsionada principalmente pela renovação de contratos Enterprise. Recomendo focar na retenção de clientes Tier 1.',
         timestamp: new Date(),
       }
 

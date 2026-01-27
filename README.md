@@ -1,132 +1,94 @@
-# Control AI
+# Control AI - Plataforma SaaS de IA Privada
 
-## 🔗 Links do Projeto
+> **Case Técnico:** MVP de plataforma Multi-tenant para uso seguro de LLMs em ambiente corporativo.
 
-- **Deploy (Produção):** https://control-ai-one.vercel.app
+![Status](https://img.shields.io/badge/Status-Concluído-success) ![Stack](https://img.shields.io/badge/Tech-Next.js_15_|_Supabase_|_Tailwind-blue) ![Deploy](https://img.shields.io/badge/Deploy-Vercel-black)
 
-## 📌 Sobre o projeto
+## 🔗 Links
 
-**Control AI** é um MVP de uma plataforma SaaS multi-tenant voltada para gestão e controle do uso de Inteligência Artificial por empresas. O objetivo do projeto é permitir que diferentes empresas (workspaces) utilizem recursos de IA de forma isolada, segura e organizada, com controle de usuários e histórico de interações.
-
-Este projeto foi desenvolvido como **case técnico**, com foco em demonstrar **raciocínio técnico, arquitetura, organização de código e integração de serviços**, priorizando um MVP funcional.
-
----
-
-## 🎯 Objetivo do MVP
-
-- Demonstrar uma arquitetura **multi-tenant**
-- Implementar autenticação e isolamento de dados por empresa
-- Criar um fluxo básico de uso de IA (chat)
-- Apresentar um dashboard funcional
-- Documentar decisões técnicas e próximos passos
+- **Aplicação Online:** [Acessar Control AI](https://control-ai-one.vercel.app)
+- **Repositório:** [GitHub](https://github.com/JVictorVeloso/control-ai)
 
 ---
 
-## 🧱 Arquitetura e Stack
+## 📌 Sobre o Projeto
 
-### Frontend
+**Control AI** é um MVP de uma plataforma SaaS desenvolvida como desafio técnico. O objetivo é permitir que empresas utilizem **Inteligência Artificial (LLMs)** de forma **segura, privada e auditável**.
 
-- **Next.js** (React)
-- **TypeScript**
-- **Tailwind CSS**
+O diferencial da plataforma é o modelo **BYOK (Bring Your Own Key)**, onde cada empresa configura suas próprias credenciais de IA, mantendo total segregação de dados através de uma arquitetura **Multi-tenant** robusta.
 
-### Backend
-
-- **API Routes do Next.js**
-- **Supabase** (Auth, Database, RLS)
-
-### Banco de Dados
-
-- PostgreSQL (via Supabase)
-- Políticas de **Row Level Security (RLS)** para isolamento entre tenants
-
----
-
-## 🔐 Autenticação e Multi‑Tenant
-
-- Autenticação via **Supabase Auth**
-- Cada usuário pertence a um **Workspace (Empresa)**
-- Isolamento total de dados entre empresas usando **RLS**
-- Apenas usuários autorizados acessam dados do próprio workspace
+### 🎯 Objetivos do MVP (Cumpridos)
+- ✅ **Arquitetura Multi-tenant:** Isolamento de dados por empresa (RLS).
+- ✅ **Segurança Corporativa:** Login, Logout e Proteção de Rotas (Middleware).
+- ✅ **Modelo BYOK:** Interface para gestão segura de chaves de API.
+- ✅ **Experiência do Usuário:** Landing Page, Dashboard interativo e Chat Corporativo.
 
 ---
 
 ## 🧠 Funcionalidades Implementadas
 
-- ✅ Login e Logout
-- ✅ Criação e seleção de Workspace (Empresa)
-- ✅ Dashboard multi-tenant
-- ✅ Interface de Chat com IA (mockada)
-- ✅ Estrutura preparada para integração com IA real
+### 1. 🌐 Landing Page Institucional
+- Página inicial focada em conversão, apresentando os pilares de segurança e privacidade do produto.
+- Design responsivo e alinhado com a identidade visual corporativa.
+
+### 2. 🔐 Autenticação & Segurança
+- Sistema completo de **Login/Signup** via Supabase Auth.
+- **Middleware** customizado para proteção de rotas (impede acesso não autorizado).
+- **Logout** funcional com limpeza de sessão segura.
+
+### 3. 🏢 Dashboard Multi-tenant
+- Visão geral do Workspace com atalhos rápidos.
+- Sidebar inteligente que exibe o contexto da empresa logada.
+- Navegação fluida entre ferramentas (Chat, Configurações).
+
+### 4. 🤖 Chat com IA (Simulação Corporativa)
+- Interface de chat moderna e responsiva.
+- **Mock Inteligente:** O sistema simula respostas de uma IA treinada em dados corporativos ("Analisei os dados internos..."), demonstrando o potencial de uso real.
+
+### 5. 🔑 Configuração BYOK (Bring Your Own Key)
+- Tela dedicada para configuração de chaves de API (OpenAI/Claude).
+- Feedback visual de validação e segurança (máscara de senha).
+- UI preparada para criptografia de ponta a ponta.
 
 ---
 
-## 🤖 Chat com IA (MVP)
+## 🧱 Arquitetura e Stack Tecnológica
 
-O chat com IA foi implementado inicialmente de forma **mockada**, com o objetivo de:
+O projeto segue rigorosamente os requisitos do PRD:
 
-- Demonstrar o fluxo de uso
-- Evitar exposição de chaves de API
-- Manter o foco no MVP e na arquitetura
+### Frontend
+- **Framework:** Next.js 15 (App Router)
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS + Lucide Icons
+- **UI/UX:** Design limpo, focado em SaaS B2B
 
-A estrutura já está preparada para integração futura com APIs de LLMs (OpenAI, Gemini, etc).
-
----
-
-## ❌ Funcionalidades Não Implementadas (Planejadas)
-
-Algumas funcionalidades previstas no escopo completo foram **intencionalmente deixadas para versões futuras**, por questão de tempo e priorização do MVP:
-
-- ❌ Integração com **Stripe** (billing e planos)
-- ❌ Uso de **BYOK (Bring Your Own Key)** para IA
-- ❌ Histórico persistente de conversas
-- ❌ Controle de consumo por tokens
-
-Essas funcionalidades estão mapeadas e documentadas como próximos passos.
+### Backend & Dados
+- **BaaS:** Supabase (PostgreSQL)
+- **Auth:** Supabase Auth (Gerenciamento de Sessão)
+- **Segurança:** RLS (Row Level Security) ativado no Banco de Dados para garantir que uma empresa nunca acesse dados de outra.
 
 ---
 
-## ▶️ Como rodar o projeto localmente
+## ▶️ Como rodar localmente
 
 ```bash
-# Clone o repositório
+# 1. Clone o repositório
 git clone https://github.com/JVictorVeloso/control-ai.git
 
-# Entre na pasta
+# 2. Entre na pasta
 cd control-ai
 
-# Instale as dependências
+# 3. Instale as dependências
 npm install
 
-# Rode o projeto
+# 4. Configure as variáveis de ambiente (.env.local)
+# Crie um arquivo .env.local com suas chaves do Supabase:
+# NEXT_PUBLIC_SUPABASE_URL=sua_url
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave
+
+# 5. Rode o servidor de desenvolvimento
 npm run dev
-```
-
-Configure as variáveis de ambiente do Supabase conforme o arquivo `.env.example`.
 
 ---
 
-## 🚀 Próximos Passos (Roadmap)
-
-- Integração real com API de IA (OpenAI / Gemini)
-- Implementação de cobrança via Stripe
-- Controle de uso por workspace
-- Histórico completo de conversas
-- Melhorias na UI/UX
-
----
-
-## 🧠 Considerações Finais
-
-Este projeto representa meu **nível atual de conhecimento** e minha capacidade de:
-
-- Aprender tecnologias novas
-- Estruturar soluções completas
-- Pensar em arquitetura e segurança
-- Priorizar entregas em formato MVP
-
-Mesmo sem experiência prévia como Full Stack, o foco foi demonstrar **potencial, organização e raciocínio técnico**, alinhados com um ambiente real de produto.
-
----
-
-📌 Desenvolvido por **João Victor**
+📌 Desenvolvido por **João Victor Rocha Veloso**

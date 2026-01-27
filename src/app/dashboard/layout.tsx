@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/server'
 import { Building2, LogOut, MessageSquare, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+// 👇 IMPORTANTE: Importamos a ação de sair
+import { signOut } from '@/app/login/actions'
 
 export default async function DashboardLayout({
   children,
@@ -31,11 +33,13 @@ export default async function DashboardLayout({
       <aside className="hidden md:flex w-64 flex-col border-r bg-white p-6 justify-between">
         <div>
           <div className="flex items-center gap-2 mb-8 text-black">
-            <Building2 className="h-6 w-6" />
+            <div className="p-2 bg-black rounded-lg text-white">
+              <Building2 className="h-5 w-5" />
+            </div>
             <div>
               <h2 className="font-bold text-lg leading-none">Control AI</h2>
               <p className="text-xs text-gray-500 mt-1">
-                {workspace?.name || 'SaaS'}
+                {workspace?.name || 'Enterprise'}
               </p>
             </div>
           </div>
@@ -48,8 +52,10 @@ export default async function DashboardLayout({
               <MessageSquare className="h-4 w-4" />
               Chat AI
             </Link>
+
+            {/* 👇 LINK CORRIGIDO: Agora aponta para /dashboard/settings */}
             <Link
-              href="/dashboard"
+              href="/dashboard/settings"
               className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition"
             >
               <Settings className="h-4 w-4" />
@@ -59,11 +65,15 @@ export default async function DashboardLayout({
         </div>
 
         <div className="border-t pt-4">
-          <p className="text-xs text-gray-400 mb-2 truncate">{user.email}</p>
-          <form action="/auth/signout" method="post">
-            <button className="flex items-center gap-2 text-sm text-red-500 hover:text-red-700 transition w-full">
+          <p className="text-xs text-gray-400 mb-2 truncate px-2">
+            {user.email}
+          </p>
+
+          {/* 👇 LOGOUT FUNCIONAL */}
+          <form action={signOut}>
+            <button className="flex items-center gap-2 px-2 text-sm font-medium text-red-500 hover:text-red-700 hover:bg-red-50 w-full py-2 rounded-md transition-colors">
               <LogOut className="h-4 w-4" />
-              Sair
+              Sair do Sistema
             </button>
           </form>
         </div>
