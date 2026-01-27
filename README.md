@@ -77,6 +77,20 @@ O projeto segue rigorosamente os requisitos do PRD:
 
 ---
 
+## 📸 Evidências de Funcionamento
+
+As evidências de funcionamento do MVP estão disponíveis no diretório:
+
+📁 `/docs/evidencias`
+
+Incluindo:
+- Autenticação e controle de acesso
+- Dashboard do usuário
+- Chat com IA funcional
+- Proteção de rotas e separação lógica por tenant
+
+---
+
 ## ▶️ Como rodar localmente
 
 ```bash
