@@ -91,6 +91,14 @@ Incluindo:
 
 ---
 
+## 🎥 Vídeo Demonstrativo
+
+Demonstração visual do funcionamento do MVP ControlAI:
+
+https://www.loom.com/share/6506dd7003334119b3504875c603f023
+
+---
+
 ## ▶️ Como rodar localmente
 
 ```bash
