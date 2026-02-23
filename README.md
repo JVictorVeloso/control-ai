@@ -279,20 +279,20 @@ Todos os fluxos críticos implementam feedback visual completo (loading, erro, s
 
 O projeto separa **landing page** e **autenticação** em rotas distintas:
 
-| Rota                   | Propósito                                      | Conteúdo                                  |
-| ---------------------- | ---------------------------------------------- | ----------------------------------------- |
-| **`/login`**           | Landing page pública com marketing             | Hero section, features, pricing, CTAs     |
-| **`/auth`**            | Formulário de autenticação (sign up/login)     | Tabs de cadastro/login, validação         |
-| `/dashboard`           | Área autenticada (visão geral)                 | Cards de stats, acesso rápido aos módulos |
-| `/dashboard/chat`      | Chat com IA (com seleção de agente)            | Conversas, envio de mensagens, agentes    |
-| `/dashboard/agents`    | Gestão de Agentes IA (CRUD)                    | Criar, editar, deletar agentes com prompt |
-| `/dashboard/team`      | Gestão de Equipe                               | Convidar, alterar role, remover membros   |
-| `/dashboard/company`   | Gestão da Empresa                              | Editar nome, slug, estatísticas, deletar  |
-| `/dashboard/audit`     | Auditoria e Compliance                         | Logs de ações, filtros, exportação        |
-| `/dashboard/settings`  | Configurações (BYOK)                           | API Key (criptografada), status segurança |
-| `/admin/master`        | Dashboard do Master Admin (acesso global)      | Lista todas empresas da plataforma        |
-| `/admin/tenant`        | Dashboard do Admin Tenant (gestão da empresa)  | Gerenciar equipe, API keys, auditoria     |
-| `/setup`               | Onboarding para colaboradores                  | Escolha de role (Master ou Admin Tenant)  |
+| Rota                  | Propósito                                     | Conteúdo                                  |
+| --------------------- | --------------------------------------------- | ----------------------------------------- |
+| **`/login`**          | Landing page pública com marketing            | Hero section, features, pricing, CTAs     |
+| **`/auth`**           | Formulário de autenticação (sign up/login)    | Tabs de cadastro/login, validação         |
+| `/dashboard`          | Área autenticada (visão geral)                | Cards de stats, acesso rápido aos módulos |
+| `/dashboard/chat`     | Chat com IA (com seleção de agente)           | Conversas, envio de mensagens, agentes    |
+| `/dashboard/agents`   | Gestão de Agentes IA (CRUD)                   | Criar, editar, deletar agentes com prompt |
+| `/dashboard/team`     | Gestão de Equipe                              | Convidar, alterar role, remover membros   |
+| `/dashboard/company`  | Gestão da Empresa                             | Editar nome, slug, estatísticas, deletar  |
+| `/dashboard/audit`    | Auditoria e Compliance                        | Logs de ações, filtros, exportação        |
+| `/dashboard/settings` | Configurações (BYOK)                          | API Key (criptografada), status segurança |
+| `/admin/master`       | Dashboard do Master Admin (acesso global)     | Lista todas empresas da plataforma        |
+| `/admin/tenant`       | Dashboard do Admin Tenant (gestão da empresa) | Gerenciar equipe, API keys, auditoria     |
+| `/setup`              | Onboarding para colaboradores                 | Escolha de role (Master ou Admin Tenant)  |
 
 **Fluxo de autenticação:**
 
@@ -460,6 +460,22 @@ Acesse: http://localhost:3000
 | --------------------------------------------------- | -------------------------------------- |
 | [📐 Padrões de Código](./docs/PADROES_CODIGO.md)    | Templates obrigatórios e boas práticas |
 | [🎨 Identidade Visual](./docs/IDENTIDADE_VISUAL.md) | Paleta de cores e design system        |
+
+### 📸 Evidências de Funcionamento
+
+Screenshots das telas principais disponíveis em [`docs/evidencias/`](./docs/evidencias/):
+
+| Screenshot | Descrição |
+| --- | --- |
+| [Landing Page](./docs/evidencias/01_Landing_Page.png) | Página pública com hero, features e pricing |
+| [Login e Cadastro](./docs/evidencias/02_Tela_de_Login_e_Cadastro.png) | Autenticação com Supabase Auth |
+| [Dashboard (Claro)](./docs/evidencias/03_Dashboard_Admin(Modo%20Claro).png) | Dashboard admin em modo claro |
+| [Dashboard (Escuro)](./docs/evidencias/03.1_Dashboard_Admin(Modo%20Escuro).png) | Dashboard admin em modo escuro |
+| [Gestão da Empresa](./docs/evidencias/04_Gestao_da_Empresa.png) | CRUD de empresa com stats |
+| [Gestão de Equipe](./docs/evidencias/05_Gestao_de_Equipe_RBAC.png) | RBAC e gerenciamento de membros |
+| [Segurança BYOK](./docs/evidencias/06_Seguranca_e_BYOK_API.png) | API Key criptografada (AES-256-GCM) |
+| [Agentes IA](./docs/evidencias/07_Criacao_de_Agentes_IA.png) | CRUD de agentes com prompt personalizado |
+| [Chat IA](./docs/evidencias/08_Chat_IA_Em_Uso.png) | Chat funcionando com LLM |
 
 ---
 
