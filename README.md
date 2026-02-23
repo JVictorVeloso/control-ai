@@ -564,8 +564,8 @@ Distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](./LICENSE) par
 
 **João Victor Rocha Veloso**
 
-- GitHub: [@JVictorVeloso](https://github.com/JVictorVeloso)
-- LinkedIn: [João Victor Veloso](https://linkedin.com/in/joao-victor-veloso)
+- GitHub: [@JVictorVeloso](https://github.com/JVictorVeloso/control-ai)
+- LinkedIn: [João Victor Veloso](https://www.linkedin.com/in/jvictorveloso/)
 
 ---
 
