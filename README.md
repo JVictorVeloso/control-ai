@@ -128,7 +128,7 @@
 
 ### Backend Completo
 
-Arquitetura backend com persistência PostgreSQL, 30 Server Actions e integração com 3 APIs externas de IA.
+Arquitetura backend com persistência PostgreSQL, 37 Server Actions e integração com 3 APIs externas de IA.
 
 ### 📊 Especificações Técnicas
 
@@ -279,16 +279,20 @@ Todos os fluxos críticos implementam feedback visual completo (loading, erro, s
 
 O projeto separa **landing page** e **autenticação** em rotas distintas:
 
-| Rota                | Propósito                                      | Conteúdo                                  |
-| ------------------- | ---------------------------------------------- | ----------------------------------------- |
-| **`/login`**        | Landing page pública com marketing             | Hero section, features, pricing, CTAs     |
-| **`/auth`**         | Formulário de autenticação (sign up/login)     | Tabs de cadastro/login, validação         |
-| `/dashboard`        | Área autenticada (redireciona baseado no role) | Chat IA, settings, company, team, audit   |
-| `/dashboard/agents` | Gestão de Agentes IA (CRUD)                    | Criar, editar, deletar agentes com prompt |
-| `/dashboard/chat`   | Chat com IA (com seleção de agente)            | Conversas, envio de mensagens, agentes    |
-| `/admin/master`     | Dashboard do Master Admin (acesso global)      | Lista todas empresas da plataforma        |
-| `/admin/tenant`     | Dashboard do Admin Tenant (gestão da empresa)  | Gerenciar equipe, API keys, auditoria     |
-| `/setup`            | Onboarding para colaboradores                  | Escolha de role (Master ou Admin Tenant)  |
+| Rota                   | Propósito                                      | Conteúdo                                  |
+| ---------------------- | ---------------------------------------------- | ----------------------------------------- |
+| **`/login`**           | Landing page pública com marketing             | Hero section, features, pricing, CTAs     |
+| **`/auth`**            | Formulário de autenticação (sign up/login)     | Tabs de cadastro/login, validação         |
+| `/dashboard`           | Área autenticada (visão geral)                 | Cards de stats, acesso rápido aos módulos |
+| `/dashboard/chat`      | Chat com IA (com seleção de agente)            | Conversas, envio de mensagens, agentes    |
+| `/dashboard/agents`    | Gestão de Agentes IA (CRUD)                    | Criar, editar, deletar agentes com prompt |
+| `/dashboard/team`      | Gestão de Equipe                               | Convidar, alterar role, remover membros   |
+| `/dashboard/company`   | Gestão da Empresa                              | Editar nome, slug, estatísticas, deletar  |
+| `/dashboard/audit`     | Auditoria e Compliance                         | Logs de ações, filtros, exportação        |
+| `/dashboard/settings`  | Configurações (BYOK)                           | API Key (criptografada), status segurança |
+| `/admin/master`        | Dashboard do Master Admin (acesso global)      | Lista todas empresas da plataforma        |
+| `/admin/tenant`        | Dashboard do Admin Tenant (gestão da empresa)  | Gerenciar equipe, API keys, auditoria     |
+| `/setup`               | Onboarding para colaboradores                  | Escolha de role (Master ou Admin Tenant)  |
 
 **Fluxo de autenticação:**
 
