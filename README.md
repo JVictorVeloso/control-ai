@@ -9,7 +9,7 @@
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel&logoColor=white)](https://control-ai-v2.vercel.app/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
 
-**[🚀 Ver Demo Online](https://control-ai-v2.vercel.app/)** | **[📚 Documentação](./docs/)** | **[📋 Docs Técnicos](./docs/README.md)**
+**[🚀 Ver Demo Online](https://control-ai-v2.vercel.app/)** | **[🎬 Vídeo Demonstrativo](https://www.loom.com/share/c5528ed45df24a7ea151594fe234c9f2)** | **[📚 Documentação](./docs/)** | **[📋 Docs Técnicos](./docs/README.md)**
 
 ---
 
@@ -35,6 +35,7 @@
 | Aspecto             | Detalhe                                                                                 |
 | ------------------- | --------------------------------------------------------------------------------------- |
 | **Demo**            | [control-ai-v2.vercel.app](https://control-ai-v2.vercel.app/) — funcionando em produção |
+| **Vídeo**           | [🎬 Demonstração no Loom](https://www.loom.com/share/c5528ed45df24a7ea151594fe234c9f2)  |
 | **Stack principal** | Next.js 16 (App Router) + Supabase + TypeScript 5                                       |
 | **Segurança**       | AES-256-GCM + BYOK + RLS habilitado em 100% das tabelas                                 |
 | **Providers de IA** | OpenAI GPT-4o-mini, Anthropic Claude 3.5, Google Gemini 2.5                             |
@@ -384,6 +385,7 @@ As evidências de funcionamento do MVP estão disponíveis no diretório:
 📁 `/docs/evidencias`
 
 Incluindo:
+
 - Autenticação e controle de acesso
 - Dashboard do usuário
 - Chat com IA funcional
@@ -487,17 +489,17 @@ Acesse: http://localhost:3000
 
 Screenshots das telas principais disponíveis em [`docs/evidencias/`](./docs/evidencias/):
 
-| Screenshot | Descrição |
-| --- | --- |
-| [Landing Page](./docs/evidencias/01_Landing_Page.png) | Página pública com hero, features e pricing |
-| [Login e Cadastro](./docs/evidencias/02_Tela_de_Login_e_Cadastro.png) | Autenticação com Supabase Auth |
-| [Dashboard (Claro)](./docs/evidencias/03_Dashboard_Admin(Modo%20Claro).png) | Dashboard admin em modo claro |
-| [Dashboard (Escuro)](./docs/evidencias/03.1_Dashboard_Admin(Modo%20Escuro).png) | Dashboard admin em modo escuro |
-| [Gestão da Empresa](./docs/evidencias/04_Gestao_da_Empresa.png) | CRUD de empresa com stats |
-| [Gestão de Equipe](./docs/evidencias/05_Gestao_de_Equipe_RBAC.png) | RBAC e gerenciamento de membros |
-| [Segurança BYOK](./docs/evidencias/06_Seguranca_e_BYOK_API.png) | API Key criptografada (AES-256-GCM) |
-| [Agentes IA](./docs/evidencias/07_Criacao_de_Agentes_IA.png) | CRUD de agentes com prompt personalizado |
-| [Chat IA](./docs/evidencias/08_Chat_IA_Em_Uso.png) | Chat funcionando com LLM |
+| Screenshot                                                                        | Descrição                                   |
+| --------------------------------------------------------------------------------- | ------------------------------------------- |
+| [Landing Page](./docs/evidencias/01_Landing_Page.png)                             | Página pública com hero, features e pricing |
+| [Login e Cadastro](./docs/evidencias/02_Tela_de_Login_e_Cadastro.png)             | Autenticação com Supabase Auth              |
+| [Dashboard (Claro)](<./docs/evidencias/03_Dashboard_Admin(Modo%20Claro).png>)     | Dashboard admin em modo claro               |
+| [Dashboard (Escuro)](<./docs/evidencias/03.1_Dashboard_Admin(Modo%20Escuro).png>) | Dashboard admin em modo escuro              |
+| [Gestão da Empresa](./docs/evidencias/04_Gestao_da_Empresa.png)                   | CRUD de empresa com stats                   |
+| [Gestão de Equipe](./docs/evidencias/05_Gestao_de_Equipe_RBAC.png)                | RBAC e gerenciamento de membros             |
+| [Segurança BYOK](./docs/evidencias/06_Seguranca_e_BYOK_API.png)                   | API Key criptografada (AES-256-GCM)         |
+| [Agentes IA](./docs/evidencias/07_Criacao_de_Agentes_IA.png)                      | CRUD de agentes com prompt personalizado    |
+| [Chat IA](./docs/evidencias/08_Chat_IA_Em_Uso.png)                                | Chat funcionando com LLM                    |
 
 ---
 
