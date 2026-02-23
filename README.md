@@ -373,6 +373,28 @@ Redireciona para dashboard apropriado (/dashboard, /admin/master, /admin/tenant,
 
 ---
 
+## 📸 Evidências de Funcionamento
+
+As evidências de funcionamento do MVP estão disponíveis no diretório:
+
+📁 `/docs/evidencias`
+
+Incluindo:
+- Autenticação e controle de acesso
+- Dashboard do usuário
+- Chat com IA funcional
+- Proteção de rotas e separação lógica por tenant
+
+---
+
+## 🎥 Vídeo Demonstrativo
+
+Demonstração visual do funcionamento do MVP Control AI:
+
+**[▶️ Assistir ao Vídeo Demonstrativo no Loom](https://www.loom.com/share/6506dd7003334119b3504875c603f023)**
+
+---
+
 ## 🚀 Como Rodar Localmente
 
 > **💡 Quer apenas testar?** Acesse a [demo online](https://control-ai-v2.vercel.app/) sem precisar configurar nada. O setup local é necessário apenas para desenvolvimento.
