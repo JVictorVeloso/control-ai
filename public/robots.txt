@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /login
+
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /setup/
+Disallow: /auth/
+
+Sitemap: https://control-ai-v2.vercel.app/sitemap.xml

@@ -46,18 +46,29 @@ export async function createWorkspace(formData: FormData) {
     return { error: 'Erro ao criar empresa: ' + empresaError?.message }
   }
 
-  // Atualizar o perfil do usuário com o empresa_id
+  // Atualizar o perfil do usuário com o empresa_id e definir como admin_tenant
   const { error: perfilError } = await supabase
     .from('perfis')
-    .update({ empresa_id: empresa.id })
+    .update({
+      empresa_id: empresa.id,
+      role: 'master', // Criador da empresa é o owner (master)
+    })
     .eq('id', user.id)
 
   if (perfilError) {
     return { error: 'Erro ao atualizar perfil: ' + perfilError.message }
   }
 
-  revalidatePath('/dashboard')
-  redirect('/dashboard')
+  // Log de auditoria
+  await supabase.from('auditoria').insert({
+    empresa_id: empresa.id,
+    usuario_id: user.id,
+    acao: 'empresa_created',
+    detalhes: `Empresa ${empresaNome} criada via onboarding`,
+  })
+
+  revalidatePath('/admin/tenant')
+  redirect('/admin/tenant')
 }
 
 export async function logout() {

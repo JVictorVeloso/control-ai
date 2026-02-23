@@ -1,10 +1,9 @@
 import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar'
-import { MobileNav } from '@/components/dashboard/mobile-nav'
 import { Toaster } from '@/components/ui/toaster'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
-export default async function DashboardLayout({
+export default async function TenantAdminLayout({
   children,
 }: {
   children: React.ReactNode
@@ -26,7 +25,12 @@ export default async function DashboardLayout({
     .eq('id', user.id)
     .single()
 
-  // Buscar nome da empresa se existir
+  // Verificar se é admin_tenant
+  if (perfil?.role !== 'admin_tenant') {
+    redirect('/dashboard')
+  }
+
+  // Buscar nome da empresa
   let empresaNome = 'Enterprise'
   if (perfil?.empresa_id) {
     const { data: empresa } = await supabase
@@ -39,24 +43,15 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-zinc-950">
-      {/* Desktop Sidebar */}
+    <div className="flex h-screen bg-gray-50 dark:bg-zinc-950">
       <DashboardSidebar
         empresaNome={empresaNome}
         userEmail={user.email || ''}
-        userRole={perfil?.role || 'colaborador'}
+        userRole="admin_tenant"
       />
 
-      {/* Mobile Navigation (header + bottom bar + slide menu) */}
-      <MobileNav
-        empresaNome={empresaNome}
-        userEmail={user.email || ''}
-        userRole={perfil?.role || 'colaborador'}
-      />
-
-      {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto">
-        <div className="p-4 md:p-8 pb-20 md:pb-8">{children}</div>
+        <div className="p-4 md:p-8">{children}</div>
       </main>
       <Toaster />
     </div>

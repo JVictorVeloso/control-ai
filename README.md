@@ -1,79 +1,375 @@
-# Control AI - Plataforma SaaS de IA Privada
+﻿# 🤖 Control AI
 
-> **Case Técnico:** MVP de plataforma Multi-tenant para uso seguro de LLMs em ambiente corporativo.
+> **Plataforma SaaS Multi-tenant para uso seguro de IA em ambiente corporativo**
 
-![Status](https://img.shields.io/badge/Status-Concluído-success) ![Stack](https://img.shields.io/badge/Tech-Next.js_15_|_Supabase_|_Tailwind-blue) ![Deploy](https://img.shields.io/badge/Deploy-Vercel-black)
+[![Status](https://img.shields.io/badge/Status-MVP-success)](https://control-ai-v2.vercel.app/)
+[![Stack](https://img.shields.io/badge/Stack-Next.js_16_+_Supabase-blue)](#-tecnologias)
+[![Security](https://img.shields.io/badge/Security-RLS_+_Encryption-green)](#-segurança)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel&logoColor=white)](https://control-ai-v2.vercel.app/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
 
-## 🔗 Links
-
-- **Aplicação Online:** [Acessar Control AI](https://control-ai-v2.vercel.app/)
-- **Repositório:** [GitHub](https://github.com/JVictorVeloso/control-ai)
-
----
-
-## 📌 Sobre o Projeto
-
-**Control AI** é um MVP de uma plataforma SaaS desenvolvida como desafio técnico. O objetivo é permitir que empresas utilizem **Inteligência Artificial (LLMs)** de forma **segura, privada e auditável**.
-
-O diferencial da plataforma é o modelo **BYOK (Bring Your Own Key)**, onde cada empresa configura suas próprias credenciais de IA, mantendo total segregação de dados através de uma arquitetura **Multi-tenant** robusta.
-
-### 🎯 Objetivos do MVP (Cumpridos)
-
-- ✅ **Arquitetura Multi-tenant:** Isolamento de dados por empresa (RLS).
-- ✅ **Segurança Corporativa:** Login, Logout e Proteção de Rotas (Middleware).
-- ✅ **Modelo BYOK:** Interface para gestão segura de chaves de API.
-- ✅ **Experiência do Usuário:** Landing Page, Dashboard interativo e Chat Corporativo.
+**[🚀 Ver Demo Online](https://control-ai-v2.vercel.app/)** | **[📚 Documentação](./docs/)** | **[📋 Docs Técnicos](./docs/README.md)**
 
 ---
 
-## 🧠 Funcionalidades Implementadas
+## 📌 Índice
 
-### 1. 🌐 Landing Page Institucional
-
-- Página inicial focada em conversão, apresentando os pilares de segurança e privacidade do produto.
-- Design responsivo e alinhado com a identidade visual corporativa.
-
-### 2. 🔐 Autenticação & Segurança
-
-- Sistema completo de **Login/Signup** via Supabase Auth.
-- **Middleware** customizado para proteção de rotas (impede acesso não autorizado).
-- **Logout** funcional com limpeza de sessão segura.
-
-### 3. 🏢 Dashboard Multi-tenant
-
-- Visão geral do Workspace com atalhos rápidos.
-- Sidebar inteligente que exibe o contexto da empresa logada.
-- Navegação fluida entre ferramentas (Chat, Configurações).
-
-### 4. 🤖 Chat com IA (Simulação Corporativa)
-
-- Interface de chat moderna e responsiva.
-- **Mock Inteligente:** O sistema simula respostas de uma IA treinada em dados corporativos ("Analisei os dados internos..."), demonstrando o potencial de uso real.
-
-### 5. 🔑 Configuração BYOK (Bring Your Own Key)
-
-- Tela dedicada para configuração de chaves de API (OpenAI/Claude).
-- Feedback visual de validação e segurança (máscara de senha).
-- UI preparada para criptografia de ponta a ponta.
+- [Visão Geral Rápida](#-visão-geral-rápida)
+- [O que é?](#-o-que-é)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias](#️-tecnologias)
+- [Implementação Técnica](#-implementação-técnica)
+- [Segurança e Multi-Tenancy](#-segurança-e-multi-tenancy)
+- [Arquitetura](#️-arquitetura)
+- [Estrutura de Rotas](#️-estrutura-de-rotas)
+- [Decisões Técnicas](#-decisões-técnicas)
+- [Como Rodar Localmente](#-como-rodar-localmente)
+- [Documentação](#-documentação)
+- [Limitações e Próximos Passos](#️-limitações-e-próximos-passos)
 
 ---
 
-## 🧱 Arquitetura e Stack Tecnológica
+## 📋 Visão Geral Rápida
 
-O projeto segue rigorosamente os requisitos do PRD:
+| Aspecto             | Detalhe                                                                                 |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| **Demo**            | [control-ai-v2.vercel.app](https://control-ai-v2.vercel.app/) — funcionando em produção |
+| **Stack principal** | Next.js 16 (App Router) + Supabase + TypeScript 5                                       |
+| **Segurança**       | AES-256-GCM + BYOK + RLS habilitado em 100% das tabelas                                 |
+| **Providers de IA** | OpenAI GPT-4o-mini, Anthropic Claude 3.5, Google Gemini 2.5                             |
+| **Backend**         | 37 Server Actions, 70+ operações DB, 20 policies RLS                                    |
+| **Docs técnicos**   | 8 documentos (4.600+ linhas) + PRD                                                      |
+| **Deploy**          | Vercel (frontend) + Supabase (banco + auth)                                             |
 
-### Frontend
+---
 
-- **Framework:** Next.js 15 (App Router)
-- **Linguagem:** TypeScript
-- **Estilização:** Tailwind CSS + Lucide Icons
-- **UI/UX:** Design limpo, focado em SaaS B2B
+## 🎯 O que é?
 
-### Backend & Dados
+**Control AI** é uma plataforma que permite empresas utilizarem **LLMs corporativos** (OpenAI GPT, Anthropic Claude, Google Gemini) de forma **segura, privada e auditável**, com modelo **BYOK - Bring Your Own Key**.
 
-- **BaaS:** Supabase (PostgreSQL)
-- **Auth:** Supabase Auth (Gerenciamento de Sessão)
-- **Segurança:** RLS (Row Level Security) ativado no Banco de Dados para garantir que uma empresa nunca acesse dados de outra.
+### Problema Resolvido
+
+- ❌ Dados corporativos vazando para APIs públicas de IA
+- ❌ Falta de controle sobre custos de IA
+- ❌ Ausência de auditoria/rastreamento de uso
+- ❌ Compartilhamento de credenciais entre funcionários
+
+### Solução
+
+- ✅ Cada empresa tem sua própria chave de API (isolamento total)
+- ✅ Chaves criptografadas (AES-256-GCM)
+- ✅ Logs de auditoria completos
+- ✅ Gerenciamento de equipes (Admin + Colaboradores)
+- ✅ Dashboards separados (Master admin vs Tenant admin)
+
+---
+
+## ✨ Funcionalidades
+
+### 🔐 Autenticação & Segurança
+
+- Login/Cadastro com Supabase Auth
+- Sistema de permissões (Master, Admin Tenant, Colaborador)
+- Middleware de proteção de rotas
+- Criptografia de API Keys (AES-256-GCM)
+- Row Level Security (RLS) no banco de dados
+
+### 💬 Chat com IA
+
+- Suporte a **OpenAI GPT-4o-mini**, **Anthropic Claude 3.5 Sonnet** e **Google Gemini 2.5 Flash**
+- **Seleção de Agente IA** com system prompt customizado por conversa
+- Histórico persistente de conversas por usuário
+- Renderização Markdown com syntax highlighting
+- Detecção automática de provider baseado na chave
+
+### 🤖 Gestão de Agentes IA
+
+- CRUD completo de agentes com nome, prompt e modelo
+- Integração end-to-end: agente selecionado → system prompt → resposta da LLM
+- 4 modelos suportados: GPT-4o-mini, Claude 3.5 Sonnet, Gemini 2.5 Flash, GPT-4o
+- Controle de acesso por role (Admin Tenant e Master)
+
+### 👥 Gestão de Equipes
+
+- Convite de membros com permissões
+- Modais de confirmação para ações críticas
+- Dashboard de métricas da empresa
+
+### 📊 Dashboards
+
+- **Admin Master:** Visão global da plataforma (todas empresas)
+- **Admin Tenant:** Gestão da própria empresa
+- **Colaborador:** Acesso ao chat e funcionalidades básicas
+
+### 🔍 Auditoria
+
+- Log de todas ações críticas (API key updates, chat, convites)
+- Rastreamento por usuário e empresa
+- Timestamps completos
+
+---
+
+## 🛠️ Tecnologias
+
+| Categoria     | Stack                                         |
+| ------------- | --------------------------------------------- |
+| **Frontend**  | Next.js 16 (App Router), React 19, TypeScript |
+| **Styling**   | Tailwind CSS, shadcn/ui, Lucide Icons         |
+| **Backend**   | Next.js Server Actions, Supabase (PostgreSQL) |
+| **Auth**      | Supabase Auth (Session-based)                 |
+| **IA**        | OpenAI API, Anthropic API, Google Gemini API  |
+| **Segurança** | Row Level Security (RLS), Crypto (Node.js)    |
+| **Deploy**    | Vercel (Frontend), Supabase (Database)        |
+
+---
+
+## ✅ Implementação Técnica
+
+### Backend Completo
+
+Arquitetura backend com persistência PostgreSQL, 30 Server Actions e integração com 3 APIs externas de IA.
+
+### 📊 Especificações Técnicas
+
+- **74 operações de banco de dados** distribuídas em CRUD completo (18 INSERT, 42 SELECT, 8 UPDATE, 6 DELETE)
+- **37 Server Actions** totalizando 2.000+ linhas de lógica de negócio
+- **6 entidades principais:** empresas, perfis, agentes_ia, conversas, mensagens, auditoria
+- **3 integrações externas:** OpenAI GPT-4o-mini, Anthropic Claude 3.5, Google Gemini 2.5
+- **Criptografia AES-256-GCM** com derivação PBKDF2 para secrets
+- **Row Level Security** habilitado em 100% das tabelas com 20 policies
+
+### 🔍 Evidências de Implementação
+
+| Entidade       | CREATE  | READ    | UPDATE  | DELETE  | Arquivo              |
+| -------------- | ------- | ------- | ------- | ------- | -------------------- |
+| **Empresas**   | ✅ L44  | ✅ L31  | ✅ L106 | ✅ L189 | `company/actions.ts` |
+| **Perfis**     | ✅ L57  | ✅ L31  | ✅ L222 | ✅ L326 | `team/actions.ts`    |
+| **Agentes IA** | ✅ L75  | ✅ L15  | ✅ L138 | ✅ L201 | `agents/actions.ts`  |
+| **Conversas**  | ✅ L21  | ✅ L103 | ❌ N/A  | ✅ L528 | `chat/actions.ts`    |
+| **Mensagens**  | ✅ L169 | ✅ L131 | ❌ N/A  | ❌ N/A  | `chat/actions.ts`    |
+| **Auditoria**  | ✅ L208 | ✅ L249 | ❌ N/A  | ❌ N/A  | Múltiplos arquivos   |
+
+📖 **[Ver documento completo de evidências →](./docs/EVIDENCIAS_BACKEND.md)** (provas com código e estatísticas)
+
+---
+
+## 🔒 Segurança e Multi-Tenancy
+
+### Arquitetura de Isolamento
+
+Sistema implementa segregação completa por tenant com Row Level Security, controle de acesso baseado em perfis e criptografia de dados sensíveis.
+
+### 🛡️ Proteções Implementadas
+
+Camadas de segurança aplicadas desde o banco de dados até a camada de aplicação:
+
+| Camada                 | Implementação                                               | Status          |
+| ---------------------- | ----------------------------------------------------------- | --------------- |
+| **Database (RLS)**     | Row Level Security em 6 tabelas + 20 policies SQL           | ✅ Ativo        |
+| **Multi-tenancy**      | Isolamento por `empresa_id` com funções auxiliares SQL      | ✅ Implementado |
+| **Autorização (RBAC)** | 3 perfis hierárquicos + 17 validações em Server Actions     | ✅ Implementado |
+| **Criptografia**       | AES-256-GCM para API keys + PBKDF2 para derivação           | ✅ Implementado |
+| **Auditoria**          | Logs detalhados de ações críticas com timestamp e contexto  | ✅ Implementado |
+| **Session Management** | Supabase Auth com refresh tokens e validação por middleware | ✅ Implementado |
+
+### 👥 Hierarquia de Perfis
+
+```
+MASTER (acesso global)
+  ├── Editar/deletar empresas
+  ├── Gerenciar todos os membros
+  └── Acesso cross-tenant
+
+ADMIN TENANT (gerente da empresa)
+  ├── Convidar/remover membros
+  ├── Configurar API keys (BYOK)
+  └── Ver auditorias
+
+COLABORADOR (usuário padrão)
+  ├── Usar chat IA
+  └── Ver próprias conversas
+```
+
+📖 **[Ver documentação completa de segurança →](./docs/SEGURANCA_RLS.md)** (700+ linhas com diagramas, policies SQL e testes práticos)  
+🚀 **[Guia de Setup Completo →](./docs/GUIA_SETUP.md)** (configure e valide em 15 minutos)
+
+---
+
+## 📋 Fluxos Administrativos & UX
+
+### Sistema de Feedback Visual
+
+Todos os fluxos críticos implementam feedback visual completo (loading, erro, sucesso) seguindo padrões de UX corporativo.
+
+### ✅ Sistema de Feedback Implementado
+
+| Tipo                    | Status          | Componentes                          |
+| ----------------------- | --------------- | ------------------------------------ |
+| **Toast Notifications** | ✅ Implementado | Success (verde), Error (vermelho)    |
+| **Loading States**      | ✅ Implementado | Botões, skeleton, spinners           |
+| **Confirmações**        | ✅ Implementado | Dialogs para ações críticas          |
+| **Progress Indicators** | ✅ Implementado | Barras de progresso, estados visuais |
+| **Error Alerts**        | ✅ Implementado | Banners vermelho com ícones          |
+
+### 🎨 Identidade Visual
+
+| Elemento            | Status          | Descrição                                          |
+| ------------------- | --------------- | -------------------------------------------------- |
+| **Paleta de Cores** | ✅ Definida     | Blue (#3b82f6), Purple (#a855f7), cores semânticas |
+| **Logo Component**  | ✅ Implementado | Gradiente blue→purple com Sparkles                 |
+| **Badge System**    | ✅ Implementado | 8 variantes (success, danger, info, purple, etc)   |
+| **Gradientes**      | ✅ Implementado | from-blue-50 via-purple-50 to-indigo-50            |
+| **Typography**      | ✅ Implementado | Geist Sans + Geist Mono                            |
+
+### 📊 Cobertura de Feedback por Página
+
+- ✅ **Setup** - Loading, erro, sucesso
+- ✅ **Company** - 8 toasts, skeleton, confirmação dupla
+- ✅ **Team** - 10 toasts, skeleton, confirm dialog
+- ✅ **Settings** - 4 toasts, loading visual, progress bars
+- ✅ **Chat** - Loading states, skeleton, feedback de envio
+- ✅ **Audit** - 3 toasts, skeleton, filtros
+
+📖 **[Ver fluxos completos com diagramas →](./docs/FLUXOS_ADMINISTRATIVOS.md)** (1.000+ linhas)  
+🎨 **[Ver guia de identidade visual →](./docs/IDENTIDADE_VISUAL.md)** (paleta, componentes, gradientes)
+
+---
+
+## 🏗️ Arquitetura
+
+**Control AI** usa **Next.js Server Actions** (não `/api/routes`) para comunicação cliente-servidor.
+
+```
+┌─────────────┐
+│   Browser   │ (React Client Components)
+└──────┬──────┘
+       │
+       │ Calls Server Actions
+       │
+┌──────▼──────────────────────────┐
+│  Server Actions (actions.ts)    │ ('use server')
+│  - Business Logic               │
+│  - Database Access              │
+│  - API Key Decryption           │
+└──────┬──────────────────────────┘
+       │
+       │ RLS + SQL
+       │
+┌──────▼──────────────────────────┐
+│  Supabase PostgreSQL            │
+│  - Row Level Security           │
+│  - Multi-tenant Isolation       │
+└─────────────────────────────────┘
+```
+
+**Vantagens desta arquitetura:**
+
+- ✅ **Type-safety:** Client e Server compartilham types
+- ✅ **Menos código:** Sem necessidade de fetch/axios
+- ✅ **Performance:** Menos overhead HTTP
+- ✅ **Simplicidade:** Funções diretas em vez de endpoints REST
+
+📖 **[Ver documentação completa de arquitetura →](./docs/ARQUITETURA.md)**  
+📐 **[Ver padrões de código →](./docs/PADROES_CODIGO.md)**
+
+---
+
+## 🗺️ Estrutura de Rotas
+
+O projeto separa **landing page** e **autenticação** em rotas distintas:
+
+| Rota                | Propósito                                      | Conteúdo                                  |
+| ------------------- | ---------------------------------------------- | ----------------------------------------- |
+| **`/login`**        | Landing page pública com marketing             | Hero section, features, pricing, CTAs     |
+| **`/auth`**         | Formulário de autenticação (sign up/login)     | Tabs de cadastro/login, validação         |
+| `/dashboard`        | Área autenticada (redireciona baseado no role) | Chat IA, settings, company, team, audit   |
+| `/dashboard/agents` | Gestão de Agentes IA (CRUD)                    | Criar, editar, deletar agentes com prompt |
+| `/dashboard/chat`   | Chat com IA (com seleção de agente)            | Conversas, envio de mensagens, agentes    |
+| `/admin/master`     | Dashboard do Master Admin (acesso global)      | Lista todas empresas da plataforma        |
+| `/admin/tenant`     | Dashboard do Admin Tenant (gestão da empresa)  | Gerenciar equipe, API keys, auditoria     |
+| `/setup`            | Onboarding para colaboradores                  | Escolha de role (Master ou Admin Tenant)  |
+
+**Fluxo de autenticação:**
+
+```
+Usuário acessa / → Redireciona para /login (landing)
+             ↓
+Clica em "Criar Conta" → Vai para /auth
+             ↓
+Faz sign up/login → Middleware valida role
+             ↓
+Redireciona para dashboard apropriado (/dashboard, /admin/master, /admin/tenant, ou /setup)
+```
+
+---
+
+## 🧠 Decisões Técnicas
+
+### Server Actions vs REST API
+
+**Escolha:** Next.js Server Actions ao invés de `/api/routes`
+
+**Razões:**
+
+- Type-safety end-to-end com TypeScript compartilhado
+- Redução de boilerplate (sem necessidade de fetch/axios)
+- Performance superior (menos overhead HTTP)
+- Suporte nativo do Next.js 16+ (App Router)
+
+### Supabase vs Prisma + PostgreSQL
+
+**Escolha:** Supabase como plataforma completa
+
+**Razões:**
+
+- Auth integrado out-of-the-box
+- Row Level Security (RLS) nativo do PostgreSQL
+- Real-time subscriptions disponíveis
+- Edge functions prontas para escalar
+- Redução de complexidade operacional
+
+### BYOK vs Chave Centralizada
+
+**Escolha:** Bring Your Own Key (cada empresa com sua chave)
+
+**Razões:**
+
+- Privacidade e compliance (dados nunca passam por keys da plataforma)
+- Controle de custos direto (empresa paga diretamente à OpenAI/Anthropic/Google)
+- Transparência total de uso
+- Sem responsabilidade de billing complexo
+
+### AES-256-GCM vs Outras Criptografias
+
+**Escolha:** AES-256-GCM com PBKDF2 para derivação de chaves
+
+**Razões:**
+
+- Padrão industrial para dados em repouso
+- Authenticated encryption (previne tampering)
+- Performance superior no Node.js
+- Compatível com requisitos LGPD/GDPR
+
+### Fetch Direto vs SDKs Oficiais (OpenAI, Anthropic, Gemini)
+
+**Escolha:** Integração via `fetch()` nativo ao invés de bibliotecas oficiais
+
+**Razões:**
+
+- Redução significativa de bundle size (~200KB economizados)
+- Controle total sobre requisições HTTP e tratamento de erros
+- Evita breaking changes de bibliotecas third-party
+- Simplicidade (apenas 3 endpoints necessários: chat completions)
+- Sem dependências externas para atualizar/auditar
+
+**Trade-offs aceitos:**
+
+- Sem type-safety automático nas respostas das APIs (tipos definidos manualmente)
+- Implementação própria de retry logic
+- Manutenção de código de integração
+
+**Justificativa:** Para um MVP, o controle e simplicidade superam os benefícios das SDKs oficiais. Em produção de larga escala, considerar migração para SDKs.
 
 ---
 
@@ -93,33 +389,166 @@ Incluindo:
 
 ## 🎥 Vídeo Demonstrativo
 
-Demonstração visual do funcionamento do MVP ControlAI:
+Demonstração visual do funcionamento do MVP Control AI:
 
-https://www.loom.com/share/6506dd7003334119b3504875c603f023
+**[▶️ Assistir ao Vídeo Demonstrativo no Loom](https://www.loom.com/share/6506dd7003334119b3504875c603f023)**
 
 ---
 
-## ▶️ Como rodar localmente
+## 🚀 Como Rodar Localmente
+
+> **💡 Quer apenas testar?** Acesse a [demo online](https://control-ai-v2.vercel.app/) sem precisar configurar nada. O setup local é necessário apenas para desenvolvimento.
+
+### Pré-requisitos
+
+- Node.js 18+
+- Conta no [Supabase](https://supabase.com/)
+- Chave de API de IA (OpenAI, Anthropic ou Google)
+
+### 1️⃣ Clone o repositório
 
 ```bash
-# 1. Clone o repositório
 git clone https://github.com/JVictorVeloso/control-ai.git
-
-# 2. Entre na pasta
 cd control-ai
+```
 
-# 3. Instale as dependências
+### 2️⃣ Instale as dependências
+
+```bash
 npm install
+```
 
-# 4. Configure as variáveis de ambiente (.env.local)
-# Crie um arquivo .env.local com suas chaves do Supabase:
-# NEXT_PUBLIC_SUPABASE_URL=sua_url
-# NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave
+### 3️⃣ Configure variáveis de ambiente
 
-# 5. Rode o servidor de desenvolvimento
+```bash
+cp .env.local.example .env.local
+```
+
+Edite `.env.local` com suas credenciais do Supabase:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=sua-url-aqui
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-aqui
+ENCRYPTION_SECRET_KEY=gere-uma-chave-de-64-caracteres-hexadecimal
+```
+
+**Gerar chave de criptografia:**
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+### 4️⃣ Configure o banco de dados
+
+Execute o setup SQL no Supabase: [docs/DATABASE_SETUP.md](./docs/DATABASE_SETUP.md)
+
+### 5️⃣ Rode o projeto
+
+```bash
 npm run dev
+```
+
+Acesse: http://localhost:3000
 
 ---
 
-📌 Desenvolvido por **João Victor Rocha Veloso**
-```
+## 📚 Documentação
+
+> **📖 [Índice completo da documentação →](./docs/README.md)**
+
+### 🎯 Essenciais
+
+| Documento                                     | Descrição                                        |
+| --------------------------------------------- | ------------------------------------------------ |
+| [🚀 Guia de Setup](./docs/GUIA_SETUP.md)      | **Configure e valide o projeto em 15 minutos**   |
+| [🏗️ Arquitetura](./docs/ARQUITETURA.md)       | **Design técnico e por que não tem /api/routes** |
+| [💾 Database Setup](./docs/DATABASE_SETUP.md) | SQL completo para Supabase (6 tabelas + RLS)     |
+
+### 🔐 Segurança & Backend
+
+| Documento                                                     | Descrição                                             |
+| ------------------------------------------------------------- | ----------------------------------------------------- |
+| [🛡️ Segurança RLS](./docs/SEGURANCA_RLS.md)                   | **Evidências de segregação por tenant (700+ linhas)** |
+| [📊 Evidências Backend](./docs/EVIDENCIAS_BACKEND.md)         | Prova de CRUDs reais e persistência PostgreSQL        |
+| [📋 Fluxos Administrativos](./docs/FLUXOS_ADMINISTRATIVOS.md) | Diagramas de UX e feedback visual (1.000+ linhas)     |
+
+### 🎨 Código & Design
+
+| Documento                                           | Descrição                              |
+| --------------------------------------------------- | -------------------------------------- |
+| [📐 Padrões de Código](./docs/PADROES_CODIGO.md)    | Templates obrigatórios e boas práticas |
+| [🎨 Identidade Visual](./docs/IDENTIDADE_VISUAL.md) | Paleta de cores e design system        |
+
+---
+
+## ⚖️ Limitações e Próximos Passos
+
+### Limitações Conhecidas
+
+**🔴 Críticas:**
+
+- ⚠️ **Rate Limiting:** Não implementado por IP/usuário (vulnerável a abuse)
+- ⚠️ **Observabilidade:** Logs não estruturados, sem integração com APM
+
+**🟡 Médias:**
+
+- ⏳ **Billing/Usage Tracking:** Sem dashboard de custos de IA
+- ⏳ **Testes Automatizados:** Ausência de testes E2E e unitários
+- ⏳ **Notificações:** Sem email/webhook para eventos críticos
+
+**🟢 Baixas (Nice-to-have):**
+
+- 💡 **Custom Models:** Suporte limitado a GPT/Claude/Gemini
+- 💡 **Fine-tuning:** Sem gerenciamento de modelos customizados
+- 💡 **Analytics Avançado:** Métricas básicas, sem insights de IA
+
+### Possíveis Evoluções
+
+**Curto prazo — estabilização:**
+
+- Rate limiting por IP/usuário (Upstash Redis)
+- Error tracking com Sentry ou similar
+- Suite de testes automatizados (Vitest + Playwright)
+- Documentação OpenAPI das integrações
+
+**Médio prazo — features corporativas:**
+
+- Dashboard de custos por usuário/departamento
+- Notificações por email (SendGrid) e webhooks
+- Suporte a modelos locais (Ollama, LM Studio)
+
+**Longo prazo — evoluções para cenário enterprise:**
+
+- Cache distribuído e otimização de performance em escala
+- Multi-region deployment conforme crescimento da base
+- Requisitos de compliance (SOC 2, LGPD avançado) quando aplicável
+
+### Trade-offs Aceitos
+
+| Decisão                   | Trade-off                                           | Justificativa                        |
+| ------------------------- | --------------------------------------------------- | ------------------------------------ |
+| Next.js Server Actions    | Não há API pública consumível por apps externos     | MVP focado em web app                |
+| Supabase                  | Vendor lock-in moderado                             | Velocidade de desenvolvimento > lock |
+| Sem testes automatizados  | Risco de regressão                                  | Prioridade em features vs QA         |
+| PostgreSQL JSON para logs | Queries menos otimizadas que ClickHouse/TimescaleDB | Simplicidade operacional             |
+
+---
+
+## 📝 Licença
+
+Distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](./LICENSE) para mais detalhes.
+
+---
+
+## 👤 Autor
+
+**João Victor Rocha Veloso**
+
+- GitHub: [@JVictorVeloso](https://github.com/JVictorVeloso)
+- LinkedIn: [João Victor Veloso](https://linkedin.com/in/joao-victor-veloso)
+
+---
+
+## 🙏 Agradecimentos
+
+Desenvolvido com ❤️ usando Next.js, Supabase e as melhores práticas de desenvolvimento web moderno.
